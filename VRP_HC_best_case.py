@@ -80,7 +80,6 @@ def min_value_neighbour(cost, vehicle_route):
 
 def hill_climbing(city_number, car_number, cost):
     current = generate_random_solution(city_number, car_number)
-    print(current, value(current, cost))
     neighbour = []
     while True:
         neighbour = min_value_neighbour(cost, current)
@@ -91,7 +90,12 @@ def hill_climbing(city_number, car_number, cost):
 def main():
     city_number, car_number, cost = get_input()
     ans = hill_climbing(city_number, car_number, cost)
-    print(ans,'\n',value(ans, cost))
+    print(car_number)
+    for i in range(len(ans)):
+        print(len(ans[i]))
+        for city in ans[i]:
+            print(city, end = ' ')
+        print()
 
 if __name__ == '__main__':
     main()

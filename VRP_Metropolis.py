@@ -1,8 +1,9 @@
 # Select first case
 import random, math
+from VRP_Greedy import greedy
 
 DEPTH = 10000
-T = 1 # Need to find a good t
+T = 0.5 # Need to find a good t
 
 def get_input():
     city_number, car_number = map(int, input().split())
@@ -65,22 +66,29 @@ def get_neighbour(current):
 
 def metropolis(city_number, car_number, cost):
     current = generate_random_solution(city_number, car_number)
-    print(current, value(current, cost))
+    all_min = current.copy()
     neighbour = []
     for i in range(DEPTH):
         # print(f'Iteration no. {i}')
         neighbour = get_neighbour(current)
-        if value(neighbour, cost) < value(current, cost):
+        if value(neighbour, cost) <= value(current, cost):
             current = neighbour
         else:
             if random.random() <= math.exp(-(value(neighbour, cost)-value(current, cost))/T):
                 current = neighbour
-    return current
+        if value(current, cost) < value(all_min, cost):
+            all_min = current
+    return all_min
 
 def main():
     city_number, car_number, cost = get_input()
     ans = metropolis(city_number, car_number, cost)
-    print(ans,'\n',value(ans, cost))
+    print(car_number)
+    for i in range(len(ans)):
+        print(len(ans[i]))
+        for city in ans[i]:
+            print(city, end = ' ')
+        print()
 
 if __name__ == '__main__':
     main()
