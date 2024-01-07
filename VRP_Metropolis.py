@@ -64,8 +64,7 @@ def get_neighbour(current):
     route.insert(j, picked)
     return revert(route)
 
-def metropolis(city_number, car_number, cost):
-    current = generate_random_solution(city_number, car_number)
+def metropolis(cost, current, t = T):
     all_min = current.copy()
     neighbour = []
     for i in range(DEPTH):
@@ -74,7 +73,7 @@ def metropolis(city_number, car_number, cost):
         if value(neighbour, cost) <= value(current, cost):
             current = neighbour
         else:
-            if random.random() <= math.exp(-(value(neighbour, cost)-value(current, cost))/T):
+            if random.random() <= math.exp(-(value(neighbour, cost)-value(current, cost))/t):
                 current = neighbour
         if value(current, cost) < value(all_min, cost):
             all_min = current
@@ -82,7 +81,8 @@ def metropolis(city_number, car_number, cost):
 
 def main():
     city_number, car_number, cost = get_input()
-    ans = metropolis(city_number, car_number, cost)
+    current = generate_random_solution(city_number, car_number)
+    ans = metropolis(cost, current)
     print(car_number)
     for i in range(len(ans)):
         print(len(ans[i]))
