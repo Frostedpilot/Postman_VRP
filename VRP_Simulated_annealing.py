@@ -43,7 +43,7 @@ def simulated_annealing(city_number, car_number, cost):
     for _ in range(DEPTH):
         s = metropolis(cost, s, t)
         if value(s, cost) < value(s_star, cost):
-            s_star = s
+            s_star = s.copy()
         t = t*ALPHA
     return s_star
 
