@@ -36,7 +36,7 @@ def get_input():
         cost.append(list(map(int, input().split())))
     return (city_number, car_number, cost)
 
-def iterated_local_search(city_number, car_number, cost):
+def simulated_annealing(city_number, car_number, cost):
     s = generate_random_solution(city_number, car_number)
     t = T
     s_star = s.copy()
@@ -49,7 +49,7 @@ def iterated_local_search(city_number, car_number, cost):
 
 def main():
     city_number, car_number, cost = get_input()
-    ans = iterated_local_search(city_number, car_number, cost)
+    ans = simulated_annealing(city_number, car_number, cost)
     print(car_number)
     for i in range(len(ans)):
         print(len(ans[i]))
