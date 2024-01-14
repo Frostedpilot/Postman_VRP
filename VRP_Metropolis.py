@@ -1,6 +1,5 @@
 # Select first case
 import random, math
-from VRP_Greedy import greedy
 
 DEPTH = 10000
 T = 0.5 # Need to find a good t
@@ -73,6 +72,7 @@ def metropolis(cost, current, t = T):
         if value(neighbour, cost) <= value(current, cost):
             current = neighbour
         else:
+            # print(math.exp(-(value(neighbour, cost)-value(current, cost))/t))
             if random.random() <= math.exp(-(value(neighbour, cost)-value(current, cost))/t):
                 current = neighbour
         if value(current, cost) < value(all_min, cost):
@@ -89,6 +89,7 @@ def main():
         for city in ans[i]:
             print(city, end = ' ')
         print()
+    print('Value:',value(ans, cost))
 
 if __name__ == '__main__':
     main()

@@ -1,8 +1,9 @@
-import random
+import random, time
 from VRP_Metropolis import metropolis
+from VRP_Greedy import greedy
 
 DEPTH = 20
-T = 2
+T = 50
 ALPHA = 0.3
 
 def generate_random_solution(city_number, car_number):
@@ -37,7 +38,9 @@ def get_input():
     return (city_number, car_number, cost)
 
 def simulated_annealing(city_number, car_number, cost):
-    s = generate_random_solution(city_number, car_number)
+    # s = generate_random_solution(city_number, car_number)
+    s = greedy(city_number, car_number, cost)
+    print(f'Greedy value: {value(s, cost)}')
     t = T
     s_star = s.copy()
     for _ in range(DEPTH):
@@ -49,7 +52,9 @@ def simulated_annealing(city_number, car_number, cost):
 
 def main():
     city_number, car_number, cost = get_input()
+    start = time.perf_counter()
     ans = simulated_annealing(city_number, car_number, cost)
+    end = time.perf_counter() - start
     print(car_number)
     for i in range(len(ans)):
         print(len(ans[i]))
@@ -57,6 +62,7 @@ def main():
             print(city, end = ' ')
         print()
     print('Value:',value(ans, cost))
+    print(f'Taken {end} s')
 
 
 if __name__ == '__main__':

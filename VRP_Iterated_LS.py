@@ -1,4 +1,4 @@
-import random
+import random, time
 from VRP_Metropolis import metropolis as local_search
 
 DEPTH = 20
@@ -40,13 +40,15 @@ def iterated_local_search(city_number, car_number, cost):
     for _ in range(DEPTH):
         s = local_search(cost, s)
         if value(s, cost) < value(s_star, cost):
-            s_star = s
+            s_star = s.copy()
         s = generate_random_solution(city_number, car_number)
     return s_star
 
 def main():
     city_number, car_number, cost = get_input()
+    start = time.perf_counter()
     ans = iterated_local_search(city_number, car_number, cost)
+    end = time.perf_counter() - start
     print(car_number)
     for i in range(len(ans)):
         print(len(ans[i]))
@@ -54,6 +56,7 @@ def main():
             print(city, end = ' ')
         print()
     print('Value:',value(ans, cost))
+    print(f'Taken {end} s')
 
 
 if __name__ == '__main__':

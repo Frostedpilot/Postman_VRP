@@ -1,3 +1,5 @@
+import time
+
 def max_length_of_route(route, cost):
     length_of_route = [sum([cost[route[i][j]][route[i][j+1]] for j in range(len(route[i])-1)]) for i in range(len(route))]
     return max(length_of_route)
@@ -34,6 +36,7 @@ def main():
     city_number+=1
     for i in range(city_number):
         cost.append(list(map(int, input().split())))
+    start = time.perf_counter()
     remain_cities = [i for i in range(1,city_number)]
     vehicle_route = []
     for i in range(car_number):
@@ -42,9 +45,15 @@ def main():
         greedy_criterion(car_number, cost, vehicle_route, remain_cities)
         if len(remain_cities) == 0:
             break
+    end = time.perf_counter() - start
     print(car_number)
     for i in range(len(vehicle_route)):
         print(len(vehicle_route[i]))
         for city in vehicle_route[i]:
             print(city, end = ' ')
         print()
+    print('Value:',max_length_of_route(vehicle_route, cost))
+    print(f'Taken: {end} s')
+
+if __name__ == '__main__':
+    main()
